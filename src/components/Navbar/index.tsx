@@ -6,6 +6,7 @@ import {
   RiShoppingCartFill
 } from 'react-icons/ri';
 import Busca from 'components/Busca';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const iconProps = {
   color: 'white',
@@ -13,14 +14,17 @@ const iconProps = {
 }
 
 export default function Navbar() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   return (
     <nav className={styles.nav}>
-      <Logo className={styles.logo} />
+      <Logo className={styles.logo} onClick={() => navigate('/')} />
       <div className={styles.links}>
         <div>
-          <a href="/" className={classNames(styles.link, {
-            [styles.selected]: window.location.pathname === '/'
-          })}>Pagina inicial</a>
+          <Link to="/" className={classNames(styles.link, {
+            [styles.selected]: location.pathname === '/'
+          })}>Página inicial</Link>
         </div>
       </div>
 
@@ -29,11 +33,11 @@ export default function Navbar() {
       </div>
 
       <div className={styles.icones}>
-        <a href="/carrinho">
+        <Link to="/carrinho">
         {window.location.pathname === '/carrinho'
           ? <RiShoppingCartFill {...iconProps} />
           : <RiShoppingCart2Line {...iconProps} />}
-        </a>
+        </Link>
       </div>
     </nav>
   )

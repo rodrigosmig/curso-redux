@@ -1,13 +1,16 @@
+import { ReactNode } from 'react';
 import styles from './TituloSemImagem.module.scss';
 
 interface Props {
   titulo: string;
   descricao: string;
+  children: ReactNode;
 }
 
 export default function TituloSemImagem({
   titulo,
-  descricao
+  descricao,
+  children
 }: Props) {
   return (
     <div className={styles.container}>
@@ -17,6 +20,7 @@ export default function TituloSemImagem({
       <h2 className={styles.descricao}>
         {descricao}
       </h2>
+      {children}
     </div>
   )
 }

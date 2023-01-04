@@ -26,6 +26,7 @@ import caixaSom from 'assets/itens/caixa-som.png';
 import caixaSomBluetooth from 'assets/itens/caixa-som-bluetooth.png';
 import miniSystem from 'assets/itens/mini-system.png';
 import tablet from 'assets/itens/tablet.png';
+import { CadastrarForm } from "pages/Anuncie";
 
 export interface IItem {
   id: string;
@@ -35,6 +36,11 @@ export interface IItem {
   favorito: boolean;
   preco: number;
   categoria: string;
+}
+
+interface IAlterarTitulo {
+  id: string;
+  titulo: string;
 }
 
 const initialState: IItem[] = [{
@@ -240,7 +246,7 @@ const initialState: IItem[] = [{
 }];
 
 const itensSlice = createSlice({
-  name: 'categorias',
+  name: 'itens',
   initialState,
   reducers: {
     mudarFavorito: (state, action: PayloadAction<string>) => {
@@ -250,10 +256,34 @@ const itensSlice = createSlice({
           return item;
         }
       })
+    },
+    cadastrarItem: (state, action: PayloadAction<CadastrarForm>) => {
+      const item = action.payload
+
+      state.push({
+        id: uuid(),
+        titulo: item.nome,
+        descricao: item.descricao,
+        foto: item.imagem,
+        favorito: false,
+        preco: item.preco,
+        categoria: item.categoria
+      })
+    },
+    alterarItem: (state, action: PayloadAction<IAlterarTitulo>) => {
+      state.forEach(item => {
+        if (item.id === action.payload.id) {
+          item.titulo = action.payload.titulo
+        }
+      })
+    },
+    deletarItem: (state, action: PayloadAction<string>) => {
+      const index = state.findIndex(item => item.id === action.payload)
+      state.splice(index, 1)
     }
   }
 });
 
-export const { mudarFavorito } = itensSlice.actions;
+export const { mudarFavorito, cadastrarItem, alterarItem, deletarItem } = itensSlice.actions;
 
 export default itensSlice.reducer;

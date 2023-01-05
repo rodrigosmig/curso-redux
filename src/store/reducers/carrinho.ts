@@ -7,7 +7,7 @@ export interface ICarrinho {
 }
 
 export interface IQuantidade {
-  id: string;
+  id: number;
   quantidade: number;
 }
 

@@ -1,14 +1,23 @@
-import Header from 'components/Header';
-import styles from './Home.module.scss';
 import relogio from 'assets/inicial.png';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from 'store';
 import Button from 'components/Button';
+import Header from 'components/Header';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { AppDispatch, RootState } from 'store';
+import { buscarCategorias } from 'store/reducers/categorias';
+import { buscarItens } from 'store/reducers/itens';
+import styles from './Home.module.scss';
 
 export default function Home() {
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const categorias = useSelector((state: RootState) => state.categorias)
+  const categorias = useSelector((state: RootState) => state.categorias);
+
+  useEffect(() => {
+    dispatch(buscarCategorias())
+    dispatch(buscarItens())
+  }, [dispatch])
 
   return (
     <div>
